@@ -51,7 +51,7 @@ print(f"content of letter {bday_letter}")
 
 
 my_email = os.environ.get("MY_EMAIL")
-password = os.environ.get("PASSWORD")
+password = os.environ.get("MY_PASSWORD")
 
 recepient_email = os.environ.get("RECEPIENT_EMAIL")
 
