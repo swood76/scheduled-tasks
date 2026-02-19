@@ -50,10 +50,10 @@ print(f"content of letter {bday_letter}")
 # 4. Send the letter generated in step 3 to that person's email address.
 
 
-my_email = os.environ.get("my_email")
-password = os.environ.get("password")
+my_email = os.environ.get("MY_EMAIL")
+password = os.environ.get("PASSWORD")
 
-recepient_email = os.environ.get("recepient_email")
+recepient_email = os.environ.get("RECEPIENT_EMAIL")
 
 #separate user row by col so email can be index
 split_bday_list = birthday_list[1].split(",")
