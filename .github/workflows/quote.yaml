@@ -43,5 +43,5 @@ jobs:
           # Add more secrets in Settings > Secrets > Actions
           MY_EMAIL: ${{ secrets.MY_EMAIL }}
           MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
-          RECEPIENT_EMAIL: ${{ secrets.RECEPIENT_EMAIL }}
+          RECEPIENT_EMAIL: ${{ secrets.RECEPIENT_EMAILS }}
         run: python motivational_email.py
