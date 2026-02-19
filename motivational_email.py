@@ -23,7 +23,9 @@ print(quote_stripped)
 my_email = os.environ.get("MY_EMAIL")
 password = os.environ.get("MY_PASSWORD")
 
-recepient = os.environ.get("RECEPIENT_EMAIL")
+recipients = [e.strip() for e in os.environ["RECEPIENT_EMAIL"].split(",")]
+
+
 now = dt.datetime.now() #use now method from datatime class/package to get current time, date...
 print(f"What are we getting with now {now}")
 day = now.weekday() #get weekday
@@ -37,7 +39,7 @@ with smtplib.SMTP("smtp.gmail.com", 587) as connection:
     if day == 3:
         connection.sendmail(
             from_addr=my_email,
-            to_addrs=recepient,
+            to_addrs=recepients,
             msg=f"Subject: Thursday Motivational Quote\n\n {quote_list[quote_counter]}".encode("utf-8")
             )
         quote_counter += 1
