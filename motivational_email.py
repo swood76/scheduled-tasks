@@ -39,7 +39,7 @@ with smtplib.SMTP("smtp.gmail.com", 587) as connection:
     if day == 3:
         connection.sendmail(
             from_addr=my_email,
-            to_addrs=recepients,
+            to_addrs=recipients,
             msg=f"Subject: Thursday Motivational Quote\n\n {quote_list[quote_counter]}".encode("utf-8")
             )
         quote_counter += 1
