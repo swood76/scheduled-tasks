@@ -12,7 +12,7 @@ print(f"What day is it {day}")
 # 1. Update the birthdays.csv
 #birthday_file = open("")
 birthday_csv = pandas.read_csv("birthdays.csv")
-birthday_dict = {row.names:row.day for (index, row) in birthday_csv.iterrows()}
+birthday_dict = {row["names"]:row["day"] for (index, row) in birthday_csv.iterrows()}
 print(f"birthday dict {birthday_dict}")
 birthday_list = []
 with open("birthdays.csv", "r") as birthday_file:
