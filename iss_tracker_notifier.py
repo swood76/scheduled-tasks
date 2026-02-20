@@ -4,8 +4,17 @@ import smtplib
 import time
 from zoneinfo import ZoneInfo
 import os
+from twilio.rest import Client
+account_sid = os.environ.get("ACCOUNT_SID")
+auth_token = os.environ.get("AUTH_TOKEN")
+
+
+
+client = Client(account_sid, auth_token)
 MY_LAT =  float(os.environ.get("MY_LAT"))
 MY_LONG = float(os.environ.get("MY_LONG"))
+VIRTUAL_WHATSAPP = os.environ.get("VIRTUAL_WHATSAPP")
+MY_PHONE = os.environ.get("MY_PHONE")
 ET = ZoneInfo("America/New_York")
 
 remaining = 60
@@ -62,7 +71,7 @@ def is_night():
 my_email = os.environ.get("MY_EMAIL")
 is_night()
 
-recipients = [e.strip() for e in os.environ["RECEPIENT_EMAIL"].split(",")]
+recipients = [ e.strip() for e in os.environ["RECEPIENT_EMAIL"].split(",") ]
 
 password= os.environ.get("MY_PASSWORD")
 def is_overhead(my_lat, my_lng, tot_deg):
@@ -100,6 +109,13 @@ def check_iss():
 
                 
             ) 
+
+        message = client.messages.create(
+        from_=VIRTUAL_WHATSAPP,
+        body=f"🔭 Look up the 🛰️ is overhead! 🌎 \n At {iss_lat} {iss_long} at {time_date.time()}",                                           
+                                                    
+        to=MY_PHONE
+        )
            # iss_match = True
 #while True:
 
