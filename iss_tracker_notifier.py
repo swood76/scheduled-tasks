@@ -151,7 +151,5 @@ def min_tick():
     #min_tick()
     
     #print(f"remaining {remaining}")
-while True:
-    #min_tick()
-    check_iss()
-    time.sleep(60)
+check_iss()
+
