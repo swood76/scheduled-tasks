@@ -5,7 +5,7 @@ import time
 from zoneinfo import ZoneInfo
 import os
 MY_LAT =  float(os.environ.get("MY_LAT"))
-MY_LONG = float(os.environ.get("MY_LONG")
+MY_LONG = float(os.environ.get("MY_LONG"))
 ET = ZoneInfo("America/New_York")
 
 remaining = 60
