@@ -1,0 +1,41 @@
+name: Weather Notifier
+
+on:
+  schedule:
+    - cron: "0 */12 * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: weather-notifier
+  cancel-in-progress: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run script
+        env:
+          MY_LAT: ${{ secrets.MY_LAT }}
+          MY_LONG: ${{ secrets.MY_LONG }}
+          MY_EMAIL: ${{ secrets.MY_EMAIL }}
+          MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
+          OWM_API_KEY: ${{ secrets.OWM_API_KEY }}
+          ACCOUNT_SID: ${{ secrets.ACCOUNT_SID }}
+          AUTH_TOKEN: ${{ secrets.AUTH_TOKEN }}
+          VIRTUAL_WHATSAPP: ${{ secrets.VIRTUAL_WHATSAPP }}
+          MY_PHONE: ${{ secrets.MY_PHONE }}
+          RECEPIENT_EMAIL: ${{ secrets.RECEPIENT_EMAIL }}
+        run: python check_weather_auto.py
