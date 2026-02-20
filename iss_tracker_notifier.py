@@ -4,8 +4,8 @@ import smtplib
 import time
 from zoneinfo import ZoneInfo
 import os
-MY_LAT =  os.environ.get("MY_LAT")
-MY_LONG = os.environ.get("MY_LONG")
+MY_LAT =  os.environ.get(MY_LAT)
+MY_LONG = os.environ.get(MY_LONG)
 ET = ZoneInfo("America/New_York")
 
 remaining = 60
