@@ -2,35 +2,24 @@ name: ISS Tracker
 
 on:
   schedule:
-    # ╔═══════════════════════════════════════════════════════════════╗
-    # ║  CHANGE THE LINE BELOW to set when your script runs          ║
-    # ║                                                                ║
-    # ║  Format:  'MINUTE HOUR * * *'                                  ║
-    # ║                                                                ║
-    # ║  Examples:                                                     ║
-    # ║    '0 9 * * *'   = 9:00 AM UTC daily                          ║
-    # ║    '30 14 * * *' = 2:30 PM UTC daily                          ║
-    # ║    '0 0 * * *'   = Midnight UTC daily                         ║
-    # ║                                                                ║
-    # ║  Use https://time.is/UTC to find your local time in UTC       ║
-    # ╚═══════════════════════════════════════════════════════════════╝
-    - cron: '* * * * *'
-
-  # This adds a "Run workflow" button so you can test manually
+    - cron: "* * * * *"
   workflow_dispatch:
+
+concurrency:
+  group: iss-tracker
+  cancel-in-progress: true
 
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 2
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
@@ -39,11 +28,9 @@ jobs:
 
       - name: Run script
         env:
-          # Your secrets are available as environment variables
-          # Add more secrets in Settings > Secrets > Actions
           MY_LAT: ${{ secrets.MY_LAT }}
-          MY_LONG: ${{ secrets.MY_LONG}}
+          MY_LONG: ${{ secrets.MY_LONG }}
           MY_EMAIL: ${{ secrets.MY_EMAIL }}
           MY_PASSWORD: ${{ secrets.MY_PASSWORD }}
-          RECEPIENT_EMAIL: ${{ secrets.RECEPIENT_EMAILS }}
+          RECEPIENT_EMAIL: ${{ secrets.RECEPIENT_EMAIL }}
         run: python iss_tracker_notifier.py
