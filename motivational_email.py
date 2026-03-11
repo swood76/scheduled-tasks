@@ -24,6 +24,7 @@ quote_stripped = []
 my_email = os.environ.get("MY_EMAIL")
 password = os.environ.get("MY_PASSWORD")
 
+#take string that has emails put into list with split, put each into new recipient list
 recipients = [e.strip() for e in os.environ["RECEPIENT_EMAIL"].split(",")]
 
 
