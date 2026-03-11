@@ -74,11 +74,31 @@ is_night()
 recipients = [ e.strip() for e in os.environ["RECEPIENT_EMAIL"].split(",") ]
 
 password= os.environ.get("MY_PASSWORD")
-def is_overhead(my_lat, my_lng, tot_deg):
+# def is_overhead(my_lat, my_lng, tot_deg):
     
-   # return abs(my_lat - iss_lat) <= tot_deg and abs(my_lng - iss_long) <= tot_deg
-   #return true if iss_lat and long is +/-5 within my lat and long
-    return MY_LAT-tot_deg <= iss_lat <= MY_LAT+tot_deg and MY_LONG-tot_deg <= iss_long <= MY_LONG+tot_deg 
+#    # return abs(my_lat - iss_lat) <= tot_deg and abs(my_lng - iss_long) <= tot_deg
+#    #return true if iss_lat and long is +/-5 within my lat and long
+#     return MY_LAT-tot_deg <= iss_lat <= MY_LAT+tot_deg and MY_LONG-tot_deg <= iss_long <= MY_LONG+tot_deg 
+def haversine(lat1, lon1, lat2, lon2):
+    R = 6371.0  # Earth radius in km
+
+    lat1 = math.radians(lat1)
+    lon1 = math.radians(lon1)
+    lat2 = math.radians(lat2)
+    lon2 = math.radians(lon2)
+
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+
+    a = math.sin(dlat / 2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2)**2
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    return R * c
+
+def is_overhead(my_lat, my_lng, iss_lat, iss_lng, max_distance_km=500):
+    distance = haversine(my_lat, my_lng, iss_lat, iss_lng)
+    print(f"ISS ground distance: {distance:.2f} km")
+    return distance <= max_distance_km
 def check_iss():
     #global iss_match
     global iss_lat, iss_long
