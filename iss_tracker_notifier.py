@@ -5,6 +5,7 @@ import time
 from zoneinfo import ZoneInfo
 import os
 from twilio.rest import Client
+import math
 account_sid = os.environ.get("ACCOUNT_SID")
 auth_token = os.environ.get("AUTH_TOKEN")
 
@@ -117,7 +118,7 @@ def check_iss():
     
 
    
-    if is_overhead(MY_LAT, MY_LONG,2):
+    if is_overhead(MY_LAT, MY_LONG,iss_lat, iss_long, max_distance_km=500):
         print("Look up!")
         with smtplib.SMTP("smtp.gmail.com", 587) as connection:
             connection.starttls()
@@ -171,5 +172,6 @@ def min_tick():
     #min_tick()
     
     #print(f"remaining {remaining}")
+#while True:
 check_iss()
-
+    #time.sleep(60)
