@@ -80,6 +80,7 @@ password= os.environ.get("MY_PASSWORD")
 #    # return abs(my_lat - iss_lat) <= tot_deg and abs(my_lng - iss_long) <= tot_deg
 #    #return true if iss_lat and long is +/-5 within my lat and long
 #     return MY_LAT-tot_deg <= iss_lat <= MY_LAT+tot_deg and MY_LONG-tot_deg <= iss_long <= MY_LONG+tot_deg 
+#added haversince for more accurate distance calc from ISS
 def haversine(lat1, lon1, lat2, lon2):
     R = 6371.0  # Earth radius in km
 
