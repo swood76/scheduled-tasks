@@ -44,6 +44,11 @@ other_weather_time_counter = 0
 rain_time_counter = 0
 snow_hour_list =[]
 snow_time_counter = 0
+today = dt.date.today()
+weekday_name = today.strftime("%A")           # e.g. "Thursday"
+#take each email in RECIPIENT_EMAIL String put into list with split by ','
+#put each into new recepient list with .strip
+recipients = [email.strip() for email in os.environ["RECEPIENT_EMAIL"].split(",")]
 #loop through each 3 hour forecast in OWE Response 
 for hours in OWE_data["list"]:
     
@@ -74,6 +79,17 @@ for hours in OWE_data["list"]:
                                  
         to=MY_PHONE
         )
+        with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+
+            connection.starttls() #enable transport layer security
+            connection.login(user=my_email, password=password)
+            #if day == 3:
+            connection.sendmail(
+            from_addr=my_email,
+            to_addrs=recipients,
+            msg=f"Subject: {weekday_name} Weather Update \n\n Bring an ☔️! It will {hours["weather"][0]["main"]} " \
+        f"({hours["rain"]["3h"]}mm) at {rain_local_dt.strftime("%Y-%m-%d %I:%M:%S %p")} 🌧️".encode("utf-8")
+            )
         rain_time_counter +=1
        # hour_list.append()
     elif condition == "Snow":
@@ -91,6 +107,17 @@ for hours in OWE_data["list"]:
         f"({hours["snow"]["3h"]}mm) at {snow_local_dt.strftime("%Y-%m-%d %I:%M:%S %p")} ❄️",
         to=MY_PHONE
         )
+        with smtplib.SMTP("smtp.gmail.com", 587) as connection:
+
+            connection.starttls() #enable transport layer security
+            connection.login(user=my_email, password=password)
+            #if day == 3:
+            connection.sendmail(
+            from_addr=my_email,
+            to_addrs=recipients,
+            msg=f"Subject: {weekday_name} Weather Update \n\n❄️ Be careful! It will {hours["weather"][0]["main"]} " \
+        f"({hours["snow"]["3h"]}mm) at {snow_local_dt.strftime("%Y-%m-%d %I:%M:%S %p")} ❄️".encode("utf-8")
+            )
         
        # print(f" time owe using city and timezone {rain_time_OWE}")
         snow_time_counter+=1
